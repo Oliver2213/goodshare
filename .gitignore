@@ -4,3 +4,5 @@ token.py
 keys.py
 key.py
 secrets.py
+*.pyc
+*.pyo
