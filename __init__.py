@@ -1,5 +1,6 @@
 # Goodshare initialization stuff
 from goodreads import client
+import os
 import sys
 
 def saveconfig(filename, configclass):
@@ -26,7 +27,7 @@ if os.path.isfile(conffile)==False:
   # No configuration files in current directory.
   print "Error! No configuration file found in current directory. Necessary API and access keys are not available. Exeting."
   sys.exit()
-else # Since it exists, load it
+else: # Since it exists, load it
   config.read(conffile)
 # Check if we've got app API keys for Goodshare and Goodreads:
 if config.get('APIKeys', 'gkey') and config.get('APIKeys', 'gsecret'):
@@ -37,14 +38,16 @@ if config.get('APIKeys', 'gkey') and config.get('APIKeys', 'gsecret'):
 if config.get('APIKeys', 'g_token') and config.get('APIKeys', 'g_token_secret'):
   print "Authenticating to Goodreads."
   gc.authenticate(config.get('APIKeys', 'g_token'), config.get('APIKeys', 'g_token_secret'))
-else # we don't have app spesific tokens, we need to authorize with Goodreads to get them
+else: # we don't have app spesific tokens, we need to authorize with Goodreads to get them
   print "No user spesific goodreads access tokens available. Redirecting you so they can be obtained..."
   gc.authenticate()
   # Encrypt and save the resulting tokens in our config file:
+  gc.session.access_token.encode('ascii','ignore')
+  gc.session.access_token_secret.encode('ascii','ignore')
   config.set('APIKeys', 'g_token', gc.session.access_token, encrypt=True)
-  config.set('APIKeys', 'g_token_secret', gc.session.access_token_secret, encrypt=true)
+  config.set('APIKeys', 'g_token_secret', gc.session.access_token_secret, encrypt=True)
   if config.get('APIKeys', 'g_token') and config.get('APIKeys', 'g_token_secret'):
     print "Retrieved You're Goodreads access tokens!"
-  else
+  else:
     print "Error in retrieving Goodreads access tokens, please try again."
-print Logged into Goodreads as:" gc.auth_user()+"!"
+print "Logged into Goodreads as: %s!" %(gc.auth_user())
