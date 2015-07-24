@@ -6,3 +6,5 @@ key.py
 secrets.py
 *.pyc
 *.pyo
+goodshare.conf
+goodshare.key
