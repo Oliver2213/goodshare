@@ -13,11 +13,11 @@ def saveconfig(filename, configclass):
   fh.close()
 
 def authorize():
-  utils.debug("Passing auth request to goodreads wrapper")
+  debug("Passing auth request to goodreads wrapper")
   gc.authenticate() #Pass the request to authorize off to the goodreads wrapper
   #Convert the returned token strings from unicode to ascii
   if gc.session.access_token and gc.session.access_token_secret:
-    utils.debug("Token values were returned.")
+    debug("Token values were returned.")
   gc.session.access_token = gc.session.access_token.encode('ascii','ignore')
   gc.session.access_token_secret = gc.session.access_token_secret.encode('ascii','ignore')
   # Encrypt and save the resulting tokens in our config file:
