@@ -12,9 +12,27 @@ else:
 
 utils.debug("Goodshare starting...")
 from goodreads import client
-from utils import authorize
 import os
 import sys
+# Functions
+def authorize():
+  utils.debug("Passing auth request to goodreads wrapper")
+  gc.authenticate() #Pass the request to authorize off to the goodreads wrapper
+  #Convert the returned token strings from unicode to ascii
+  if gc.session.access_token and gc.session.access_token_secret:
+    utils.debug("Token values were returned.")
+  gc.session.access_token = gc.session.access_token.encode('ascii','ignore')
+  gc.session.access_token_secret = gc.session.access_token_secret.encode('ascii','ignore')
+  # Encrypt and save the resulting tokens in our config file:
+  config.set('APIKeys', 'g_token', gc.session.access_token, encrypt=True)
+  config.set('APIKeys', 'g_token_secret', gc.session.access_token_secret, encrypt=True)
+  if config.get('APIKeys', 'g_token') and config.get('APIKeys', 'g_token_secret'): # If values exist in our keyfile
+    if config.get('APIKeys', 'g_token') == gc.session.access_token and config.get('APIKeys', 'g_token_secret') == gc.session.access_token_secret: # if those values match our tokens
+      print "Retrieved and saved you're Goodreads access tokens!"
+    else:
+      print "Error, tokens saved in config do not match those that were just saved!"
+  else:
+    print "Error in retrieving Goodreads access tokens, please try again."
 
 
 #Set up configuration stuff.
@@ -66,6 +84,4 @@ else: # we don't have app spesific tokens, we need to authorize with Goodreads t
   if result == 'y' or result == 'yes':
     authorize()
 print "Logged into Goodreads as: %s!" %(gc.auth_user())
-
-#Functions
 
