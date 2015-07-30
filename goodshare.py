@@ -17,6 +17,7 @@ import sys
 
 # Functions
 def authorize():
+  """Starts authorization and makes sure config values get written correctly"""
   utils.debug("Passing auth request to goodreads wrapper")
   gc.authenticate() #Pass the request to authorize off to the goodreads wrapper
   #Convert the returned token strings from unicode to ascii
@@ -36,6 +37,8 @@ def authorize():
   else:
     print "Error in retrieving Goodreads access tokens, please try again."
 
+def resaveconfig(vartosave, confvar):
+  """Rewraps the config.set function to make sure the value decrypted from config matches it's base variable"""
 
 #Set up configuration stuff.
 from secureconfig import SecureConfigParser
@@ -74,6 +77,7 @@ if gc:
   utils.debug("Goodreads class enstantiation completed.")
 else:
   utils.debug("Goodreads class failed to be created.")
+  sys.exit()
 
 # Check if we've got user spesific access tokens for Goodshare and Goodreads:
 if config.get('APIKeys', 'g_token') and config.get('APIKeys', 'g_token_secret'):
