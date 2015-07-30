@@ -75,7 +75,7 @@ def authorize():
   if gc.session.access_token and gc.session.access_token_secret:
     utils.debug("Token values were returned.")
   gc.session.access_token = gc.session.access_token.encode('ascii','ignore')
-  g  c.session.access_token_secret = gc.session.access_token_secret.encode('ascii','ignore')
+  gc.session.access_token_secret = gc.session.access_token_secret.encode('ascii','ignore')
   # Encrypt and save the resulting tokens in our config file:
   config.set('APIKeys', 'g_token', gc.session.access_token, encrypt=True)
   config.set('APIKeys', 'g_token_secret', gc.session.access_token_secret, encrypt=True)
