@@ -1,6 +1,6 @@
 [submodule "goodreads"]
 	path = goodreads
 	url = https://github.com/sefakilic/goodreads.git
-[submodule "Python-Bookshare-API-Wrapper"]
-	path = Python-Bookshare-API-Wrapper
-	url = https://github.com/oliver2213/pybookshare/
+[submodule "pybookshare"]
+	path = pybookshare
+	url = https://github.com/oliver2213/pybookshare.git
