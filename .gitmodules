@@ -1,3 +1,6 @@
 [submodule "goodreads"]
 	path = goodreads
 	url = https://github.com/sefakilic/goodreads.git
+[submodule "pybookshare"]
+	path = pybookshare
+	url = https://github.com/oliver2213/pybookshare.git
